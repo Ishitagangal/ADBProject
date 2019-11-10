@@ -1,0 +1,52 @@
+ADB Project proposal:
+Advanced Topics: Database Systems
+Programming language:  Python
+
+Design
+Class(custom data structure) : Site
+Lock table (for each site object)
+List of Variable(self defined data structure) stored at a site
+Boolean Available = true or false
+ArrayList Variables_toBeUpdated → update when site becomes available and a transaction needs the variable
+
+Class(custom data structure) : Variable (eg x1, x2,...x20)
+String var_name
+Int value
+Timestamp latestUpdate
+Boolean locked
+
+Class(custom data structure) : Transaction
+String Transaction_name
+Char type : R, W, RO
+String state -- “wait”, “commit”
+
+Class Transaction Manager (divide functionality into sitemanager and transaction manager)
+Data structures:
+ArrayList of all Transactions 
+HashMap of (variable, Map of (Transactions_that_hold_lock, lock_type)) 
+HashMap of (variable, Sites) → store all the sites the variable is at, faster lookup
+HashMap of (Transaction_waiting, list of Transactions)
+
+Functionality:
+Method Read(Tn, variable) → if Tn is read only, cool. Else check if Tn can acquire read lock) -- read any copy and return current value 
+
+Method Write(Tn, variable, value) → Tn wants to write all available copies of variable with value. Check if Tn can get all locks on all sites that contain variable. If it can’t get all locks then release all locks and wait until it can obtain all locks. 
+
+Method findSite() → to find relevant site for read transactions → checks Map, finds relevant sites. Check each site, if it has updated info or not
+
+Method deadlockDetection() →  to detect cycle in waits for graph -- >calls abort() on youngest T
+
+Method to abort(T) → aborts Transaction and removes from list
+
+Method ValidationOnCommit() → update all copies in all “up”/available sites
+
+Method dump() → return committed values of all copies of all variables at all sites, sorted per site with all values per site in ascending order by variable name
+
+
+Main driver Program
+Int current_time → keeping track of time / “next tick”
+ 
+
+
+
+
