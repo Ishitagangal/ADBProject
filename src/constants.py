@@ -1,0 +1,9 @@
+BEGIN = "begin"
+READ_ONLY = "beginRO"
+READ = "R"
+WRITE= "W"
+DUMP = "dump"
+END = "end"
+FAIL = "fail"
+RECOVER = "recover"
+SITE_MANAGER_FUNCS = [DUMP, FAIL, RECOVER]
